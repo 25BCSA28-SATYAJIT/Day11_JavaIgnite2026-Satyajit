@@ -12,43 +12,51 @@ Use nested try-catch blocks
 */
 package java_internship_day11;
 import java.util.Scanner;
-class InvalidUsernameException extends Exception {
-    InvalidUsernameException(){
-        super("Username cannot be empty");
-    }
-}
-class WeakPasswordException extends Exception {
-	WeakPasswordException(){
-		super("Password is weak ");
+class InvalidMarksException extends Exception {
+	InvalidMarksException() {
+		super("Invalid marks. Marks should be less or equal to 100");
 	}
 }
-class SnartLogin {
+class NegativeMarksException extends Exception {
+	NegativeMarksException() {
+		super("Invalid marks. Marks cant be negative");
+	}
+}
+public class Online_Exam_System {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
-		
-		String username,pass;
+		int [] marks;
+		int n,i;
+		System.out.println("Enter the number of subjects :");
+		n=sc.nextInt();
+		marks=new int [n];
+		int sum =0;
 		try {
-			System.out.println("Enter the username for login :");
-			username = sc.nextLine();
-			if(username.isEmpty())
-				throw new InvalidUsernameException();
-
-			System.out.println("Enter the password");
-			pass=sc.nextLine();
-			if(pass.length() < 6) {
-				throw new WeakPasswordException();
+			System.out.println("Enter the marks :");
+			for(i=0;i<n;i++) {
+				marks[i] = sc.nextInt();
+				if(marks[i] > 100)
+					throw new InvalidMarksException();
+				else if(marks[i] < 0)
+					throw new NegativeMarksException();
+				sum=sum+marks[i];
 			}
-			
-			
+			System.out.println("DETAILS OF MARKS");
+			for(i=0;i<n;i++)	
+				System.out.println(marks[i]);
+			System.out.println("Percentage : "+((sum)/n));
 		}
-		catch(WeakPasswordException e) {
+		catch(NegativeMarksException e) {
 			System.out.println(e.getMessage());
 		}
-		catch(InvalidUsernameException e) {
+		catch(InvalidMarksException e) {
 			System.out.println(e.getMessage());
 		}
 		sc.close();
 	}
+
+}
+
 }
